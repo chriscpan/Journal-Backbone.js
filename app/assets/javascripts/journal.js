@@ -8,12 +8,13 @@ var Journal = window.Journal = {
     this.posts = new Journal.Collections.Posts();
     this.router = new Journal.Routers.Posts({
       collection: this.posts,
-      $el: $('body')
+      $el: $('.content')
     });
+    this.sidebar = $('.sidebar');
+    this.sidebar.append(new Journal.Views.PostsIndex({
+      collection: this.posts
+    }).render().$el);
     Backbone.history.start();
-    // $('body').append(new Journal.Views.PostsIndex({
-    //     collection: this.posts
-    //   }).render().$el);
   }
 };
 

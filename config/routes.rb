@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root "root#root"
 
-  resources "posts", only: [:create, :show, :index, :destroy], default: :json
+  resources "posts", only: [:create, :show, :index, :destroy, :update], default: :json
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

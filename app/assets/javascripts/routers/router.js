@@ -1,7 +1,6 @@
 var Journal = window.Journal;
 Journal.Routers.Posts = Backbone.Router.extend({
   routes: {
-    "": "displayIndex",
     "posts/new": "displayForm",
     "posts/:id": "displayShow"
   },
@@ -18,12 +17,18 @@ Journal.Routers.Posts = Backbone.Router.extend({
   },
 
   displayShow: function(id) {
-    var v = new Journal.Views.PostShow({model: this.collection.getOrFetch(id)});
+    var v = new Journal.Views.PostShow({
+      model: this.collection.getOrFetch(id),
+      collection: this.collection
+      });
     this.$el.html(v.render().$el);
   },
 
   displayForm: function() {
-    var v = new Journal.Views.PostForm({model: this.model});
+    var collection = this.collection;
+    var v = new Journal.Views.PostForm({
+      model: new this.model(),
+      collection: collection });
     this.$el.html(v.render().$el);
   }
 });

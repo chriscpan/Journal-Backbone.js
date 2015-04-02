@@ -8,19 +8,20 @@ Journal.Views.PostForm = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template({post: new this.model()}));
+    this.$el.html(this.template({post: this.model}));
     return this;
   },
 
   submitForm: function(event) {
     event.preventDefault();
-    var newModel = new this.model($(event.currentTarget).serializeJSON());
-    newModel.save({}, {
+    this.model.set($(event.currentTarget).serializeJSON());
+    this.model.save({}, {
       success: function () {
-        Backbone.history.navigate("#", { trigger: true });
-      },
+        this.collection.add(this.model, { merge: true });
+        Backbone.history.navigate("/posts/" + this.model.id, { trigger: true });
+      }.bind(this),
       error: function (model, response) {
-        this.$el.html(this.template({post: newModel}));
+        this.$el.html(this.template({post: model}));
         var errorBlock = "<ul class='errors'>";
         $(response.responseJSON).each(function(index, message){
           errorBlock += "<li>"+message+"</li>";

@@ -4,7 +4,7 @@ Journal.Views.PostsIndex = Backbone.View.extend({
   url: "/posts",
 
   initialize: function(){
-    this.listenTo(this.collection, 'sync remove', this.render);
+    this.listenTo(this.collection, 'sync remove add', this.render);
     this.collection.fetch();
   },
 
